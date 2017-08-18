@@ -50,14 +50,20 @@
             <p class="event received">Device is Ready</p>
         </div>
 		<h1>Work</h1>
-	        <audio id="successSound" src="c.mp3" type="audio/mpeg" ></audio>
+	        <audio id="successSound" src="a.mp3" type="audio/mpeg" ></audio>
 	        <button onclick="playAudio('successSound')">Play successSound local</button>
+	    	
+        <a href="#" class="btn large" onclick="pauseAudio();">Pause Playing Audio</a>
+        <a href="#" class="btn large" onclick="stopAudio();">Stop Playing Audio</a>
 		
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
         app.initialize();
+	    
+	    	var my_media = null;
+	    
 		function playAudio(id) {
 			var running;
 			var audioElement = document.getElementById(id);
@@ -69,7 +75,7 @@
         		}
  
 		// Play the audio file at url
-			var my_media = new Media(url,
+			my_media = new Media(url,
 			// success callback
 				function() {
 					console.log("playAudio():Audio Success");
@@ -91,7 +97,28 @@
 			
 		// Play audio
 			my_media.play();
+			console.log("Audio playing");
 		}
+	    
+	    
+	    // Pause audio
+        // 
+        function pauseAudio() {
+            if (my_media) {
+                my_media.pause();
+			console.log("Audio paused");
+            }
+        }
+
+        // Stop audio
+        // 
+        function stopAudio() {
+            if (my_media) {
+                my_media.stop();
+			console.log("Audio stopped");
+            }
+        }
+
     </script>
 </body>
 
