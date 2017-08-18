@@ -62,8 +62,10 @@
 			var running;
 			var audioElement = document.getElementById(id);
                         var url = audioElement.getAttribute('src');
+			console.log("Audio URL: " +url);
 			if (device.platform == 'Android') {
-         		   url = '/android_asset/' + url;
+         			url = '/android_asset/www/' + url;
+				console.log("Android Audio URL: " +url);
         		}
  
 		// Play the audio file at url
