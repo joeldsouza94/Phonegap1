@@ -52,7 +52,7 @@
 		<h1>Work</h1>
 	        <audio id="successSound" src="c.mp3" type="audio/mpeg" ></audio>
 	        <button onclick="playAudio('successSound')">Sound1</button><br />
-	        <audio id="successSound1" src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" type="audio/mpeg" ></audio>
+	        <audio class="url" id="successSound1" src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" type="audio/mpeg" ></audio>
 	        <button onclick="playAudio('successSound1')">Sound2</button><br />
 	        <audio id="successSound2" src="a.mp3" type="audio/mpeg" ></audio>
 	        <button onclick="playAudio('successSound2')">Sound3</button><br /><br />
@@ -70,12 +70,16 @@
 		function playAudio(id) {
 			var running;
 			var audioElement = document.getElementById(id);
+			var audioClass = audioElemt.className;
+			console.log("Audio class: " +audioClass);
                         var url = audioElement.getAttribute('src');
 			console.log("Audio URL: " +url);
-			if (device.platform == 'Android') {
-         			url = '/android_asset/www/' + url;
-				console.log("Android Audio URL: " +url);
-        		}
+			if (audioClass != "url") {
+				if (device.platform == 'Android') {
+         				url = '/android_asset/www/' + url;
+					console.log("Android Audio URL: " +url);
+        			}
+			}
  
 		// Play the audio file at url
 			my_media = new Media(url,
