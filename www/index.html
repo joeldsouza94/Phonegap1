@@ -51,13 +51,14 @@
         </div>
 		<h1>Work</h1>
 	        <audio id="successSound" src="c.mp3" type="audio/mpeg" ></audio>
-	        <button onclick="playAudio('successSound')">Sound1</button><br />
+	        <button onclick="playAudio('successSound')">Sound1</button><br /><br />
 	        <audio class="url" id="successSound1" src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" type="audio/mpeg" ></audio>
-	        <button onclick="playAudio('successSound1')">Sound2</button><br />
+	        <button onclick="playAudio('successSound1')">Sound2</button><br /><br />
 	        <audio id="successSound2" src="a.mp3" type="audio/mpeg" ></audio>
-	        <button onclick="playAudio('successSound2')">Sound3</button><br /><br />
-	        <button onclick="pauseAudio();">Pause</button><br />
-	        <button onclick="stopAudio();">Stop</button>
+	        <button onclick="playAudio('successSound2')">Sound3</button><br /><br /><br />
+	        <button onclick="pauseAudio();">Pause</button><br /><br />
+	        <button onclick="stopAudio();">Stop</button><br /><br />
+            <p id="audio_position"></p>
 		
     </div>
     <script type="text/javascript" src="cordova.js"></script>
@@ -66,6 +67,7 @@
         app.initialize();
 	    
 	    	var my_media = null;
+            var mediaTimer = null;
 	    
 		function playAudio(id) {
 			var running;
@@ -82,29 +84,55 @@
 			}
  
 		// Play the audio file at url
-			my_media = new Media(url,
-			// success callback
-				function() {
-					console.log("playAudio():Audio Success");
-				},
-			// error callback
-				function(err) {
-					console.log("playAudio():Audio Error: "+err);
-				},
-			// status callback
-				function(status) {
-					console.log("playAudio():Audio Status: "+status);
-					if(status === 2) {
-						console.log("playAudio():Audio Running: "+status);
-						running = true;
-						console.log(running);
-					}
-				}
-			);
+            if (my_media == null) {
+                // Create Media object from src
+    			my_media = new Media(url,
+    			// success callback
+    				function() {
+    					console.log("playAudio():Audio Success");
+    				},
+    			// error callback
+    				function(err) {
+    					console.log("playAudio():Audio Error: "+err);
+    				},
+    			// status callback
+    				function(status) {
+    					console.log("playAudio():Audio Status: "+status);
+    					if(status === 2) {
+    						console.log("playAudio():Audio Running: "+status);
+    						running = true;
+    						console.log(running);
+    					}
+    				}
+    			);
+            } // else play current audio
+            
+
 			
 		// Play audio
 			my_media.play();
 			console.log("Audio playing");
+
+
+            // Update my_media position every second
+            if (mediaTimer == null) {
+                mediaTimer = setInterval(function() {
+                    // get my_media position
+                    my_media.getCurrentPosition(
+                        // success callback
+                        function(position) {
+                            if (position > -1) {
+                                setAudioPosition((position) + " sec");
+                            }
+                        },
+                        // error callback
+                        function(e) {
+                            console.log("Error getting pos=" + e);
+                            setAudioPosition("Error: " + e);
+                        }
+                    );
+                }, 1000);
+            }
 		}
 	    
 	    
@@ -124,6 +152,15 @@
                 my_media.stop();
 			console.log("Audio stopped");
             }
+            clearInterval(mediaTimer);
+            mediaTimer = null;
+        }
+
+
+        // Set audio position
+        // 
+        function setAudioPosition(position) {
+            document.getElementById('audio_position').innerHTML = position;
         }
 
     </script>
