@@ -65,7 +65,40 @@
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
         app.initialize();
-	    
+
+        var songList = new Array();
+        document.addEventListener('deviceready', function () {
+            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+        }, false);
+ 
+        function onFileSystemSuccess(fileSystem) {
+            console.log("fileSystem: " + fileSystem);
+            fileSystem.root.getDirectory("Music", {create: false, exclusive: false}, getDirSuccess, fail);
+        }
+         
+        function getDirSuccess(dirEntry) {
+            console.log("heee");
+            console.log("dirEntry: " + dirEntry);
+            var directoryReader = dirEntry.createReader();
+            console.log("directory: " + directoryReader);
+            directoryReader.readEntries(readerSuccess,fail);
+        }
+         
+        function readerSuccess(entries) {
+                var i;
+                for (i=0; i<entries.length; i++) {
+                    if(entries[i].name.indexOf(".mp3") != -1){
+                        songList[i] = entries[i].fullPath;
+                        console.log(songList[i]);
+                    }
+                }
+        }
+
+
+        function fail(error) {
+            console.log("Failed to list directory contents: " + error.code);
+        }
+ 
 	    	var my_media = null;
             var mediaTimer = null;
 	    
