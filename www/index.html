@@ -49,17 +49,17 @@
             <p class="event listening">Connecting to Device</p>
             <p class="event received">Device is Ready</p>
         </div>
-		<h1>Work</h1>
-	        <audio id="successSound" src="c.mp3" type="audio/mpeg" ></audio>
-	        <button onclick="playAudio('successSound')">Sound1</button><br /><br />
-	        <audio class="url" id="successSound1" src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" type="audio/mpeg" ></audio>
-	        <button onclick="playAudio('successSound1')">Sound2</button><br /><br />
-	        <audio id="successSound2" src="a.mp3" type="audio/mpeg" ></audio>
-	        <button onclick="playAudio('successSound2')">Sound3</button><br /><br /><br />
-	        <button onclick="pauseAudio();">Pause</button><br /><br />
-	        <button onclick="stopAudio();">Stop</button><br /><br />
+        <h1>Work</h1>
+            <audio id="successSound" src="c.mp3" type="audio/mpeg" ></audio>
+            <button onclick="playAudio('successSound')">Sound1</button><br /><br />
+            <audio class="url" id="successSound1" src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" type="audio/mpeg" ></audio>
+            <button onclick="playAudio('successSound1')">Sound2</button><br /><br />
+            <audio id="successSound2" src="a.mp3" type="audio/mpeg" ></audio>
+            <button onclick="playAudio('successSound2')">Sound3</button><br /><br /><br />
+            <button onclick="pauseAudio();">Pause</button><br /><br />
+            <button onclick="stopAudio();">Stop</button><br /><br />
             <p id="audio_position">0 sec</p><br /><br /><br />
-		
+        
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
@@ -68,7 +68,12 @@
 
         var songList = new Array();
         document.addEventListener('deviceready', function () {
-            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+            //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+            window.resolveLocalFileSystemURL("//" + cordova.file.applicationDirectory + "www/",getDirSuccess, 
+                function (err) {
+                    console.log(err);
+                }
+            );
         }, false);
  
         function onFileSystemSuccess(fileSystem) {
@@ -99,52 +104,52 @@
             console.log("Failed to list directory contents: " + error.code);
         }
  
-	    	var my_media = null;
+            var my_media = null;
             var mediaTimer = null;
-	    
-		function playAudio(id) {
-			var running;
-			var audioElement = document.getElementById(id);
-			var audioClass = audioElement.className;
-			console.log("Audio class: " +audioClass);
+        
+        function playAudio(id) {
+            var running;
+            var audioElement = document.getElementById(id);
+            var audioClass = audioElement.className;
+            console.log("Audio class: " +audioClass);
                         var url = audioElement.getAttribute('src');
-			console.log("Audio URL: " +url);
-			if (audioClass != "url") {
-				if (device.platform == 'Android') {
-         				url = '/android_asset/www/' + url;
-					console.log("Android Audio URL: " +url);
-        			}
-			}
+            console.log("Audio URL: " +url);
+            if (audioClass != "url") {
+                if (device.platform == 'Android') {
+                        url = '/android_asset/www/' + url;
+                    console.log("Android Audio URL: " +url);
+                    }
+            }
  
-		// Play the audio file at url
+        // Play the audio file at url
             if (my_media == null) {
                 // Create Media object from src
-    			my_media = new Media(url,
-    			// success callback
-    				function() {
-    					console.log("playAudio():Audio Success");
-    				},
-    			// error callback
-    				function(err) {
-    					console.log("playAudio():Audio Error: "+err);
-    				},
-    			// status callback
-    				function(status) {
-    					console.log("playAudio():Audio Status: "+status);
-    					if(status === 2) {
-    						console.log("playAudio():Audio Running: "+status);
-    						running = true;
-    						console.log(running);
-    					}
-    				}
-    			);
+                my_media = new Media(url,
+                // success callback
+                    function() {
+                        console.log("playAudio():Audio Success");
+                    },
+                // error callback
+                    function(err) {
+                        console.log("playAudio():Audio Error: "+err);
+                    },
+                // status callback
+                    function(status) {
+                        console.log("playAudio():Audio Status: "+status);
+                        if(status === 2) {
+                            console.log("playAudio():Audio Running: "+status);
+                            running = true;
+                            console.log(running);
+                        }
+                    }
+                );
             } // else play current audio
 
 
-			
-		// Play audio
-			my_media.play();
-			console.log("Audio playing");
+            
+        // Play audio
+            my_media.play();
+            console.log("Audio playing");
 
 
             // Update my_media position every second
@@ -166,15 +171,15 @@
                     );
                 }, 1000);
             }
-		}
-	    
-	    
-	    // Pause audio
+        }
+        
+        
+        // Pause audio
         // 
         function pauseAudio() {
             if (my_media) {
                 my_media.pause();
-			console.log("Audio paused");
+            console.log("Audio paused");
             }
         }
 
@@ -183,7 +188,7 @@
         function stopAudio() {
             if (my_media) {
                 my_media.stop();
-			console.log("Audio stopped");
+            console.log("Audio stopped");
             }
             clearInterval(mediaTimer);
             mediaTimer = null;
