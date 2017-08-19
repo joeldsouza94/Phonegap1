@@ -58,7 +58,7 @@
 	        <button onclick="playAudio('successSound2')">Sound3</button><br /><br /><br />
 	        <button onclick="pauseAudio();">Pause</button><br /><br />
 	        <button onclick="stopAudio();">Stop</button><br /><br />
-            <p id="audio_position"></p>
+            <p id="audio_position">0 sec</p><br /><br /><br />
 		
     </div>
     <script type="text/javascript" src="cordova.js"></script>
@@ -106,7 +106,7 @@
     				}
     			);
             } // else play current audio
-            
+
 
 			
 		// Play audio
@@ -122,7 +122,7 @@
                         // success callback
                         function(position) {
                             if (position > -1) {
-                                setAudioPosition((position) + " sec");
+                                setAudioPosition((Math.round(position)) + " sec");
                             }
                         },
                         // error callback
@@ -154,6 +154,7 @@
             }
             clearInterval(mediaTimer);
             mediaTimer = null;
+            setAudioPosition("0 sec");
         }
 
 
