@@ -71,7 +71,8 @@
             //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
             window.resolveLocalFileSystemURL("//" + cordova.file.applicationDirectory + "www/audio/",getDirSuccess, 
                 function (err) {
-                    console.log(err);
+                    console.log("Getting directory...");
+                    console.log("Directory error: " + err);
                 }
             );
         }, false);
