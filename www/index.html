@@ -69,7 +69,7 @@
         var songList = new Array();
         document.addEventListener('deviceready', function () {
             //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
-            window.resolveLocalFileSystemURL("//" + cordova.file.applicationDirectory + "www/",getDirSuccess, 
+            window.resolveLocalFileSystemURL("//" + cordova.file.applicationDirectory + "www/audio/",getDirSuccess, 
                 function (err) {
                     console.log(err);
                 }
