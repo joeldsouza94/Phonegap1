@@ -81,6 +81,15 @@
             console.log("dataDirectory: ");
             var systemUrl = cordova.file.dataDirectory;
             console.log(systemUrl);
+            console.log("externalApplicationStorageDirectory: ");
+            var systemUrl = cordova.file.externalApplicationStorageDirectory;
+            console.log(systemUrl);
+            console.log("externalRootDirectory: ");
+            var systemUrl = cordova.file.externalRootDirectory;
+            console.log(systemUrl);
+            console.log("externalDataDirectory: ");
+            var systemUrl = cordova.file.externalDataDirectory;
+            console.log(systemUrl);
             console.log("systemUrl end");
             window.resolveLocalFileSystemURL(systemUrl,getDirSuccess, 
                 function (err) {
