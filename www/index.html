@@ -69,7 +69,11 @@
         var songList = new Array();
         document.addEventListener('deviceready', function () {
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
-            window.resolveLocalFileSystemURL(cordova.file.applicationStorageDirectory + "android_asset/www/",getDirSuccess, 
+            console.log("systemUrl: ");
+            var systemUrl = cordova.file.applicationStorageDirectory + "/android_asset/www/";
+            console.log(systemUrl);
+            console.log("systemUrl end");
+            window.resolveLocalFileSystemURL(systemUrl,getDirSuccess, 
                 function (err) {
                     console.log("resolveLocalFileSystemURL...");
                     console.log(err);
