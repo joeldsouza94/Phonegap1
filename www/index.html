@@ -106,7 +106,11 @@
                 for (i=0; i<entries.length; i++) {
                     if(entries[i].name.indexOf(".mp3") != -1){
                         songList[i] = entries[i].fullPath;
+                        console.log("song no: " + i);
                         console.log(songList[i]);
+                        console.log(document.getElementById("successSound2").src);
+                        document.getElementById("successSound2").src = songList[i];
+                        console.log(document.getElementById("successSound2").src);
                     }
                 }
             console.log("readerSuccess ended");
