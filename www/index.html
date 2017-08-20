@@ -68,8 +68,8 @@
 
         var songList = new Array();
         document.addEventListener('deviceready', function () {
-            //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
-            window.resolveLocalFileSystemURL("//" + cordova.file.applicationDirectory + "www/audio/",getDirSuccess, 
+            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+            window.resolveLocalFileSystemURL("file:///android_asset/www/audio/c.mp3",getDirSuccess, 
                 function (err) {
                     console.log("Getting directory...");
                     console.log(err);
@@ -79,8 +79,8 @@
         }, false);
  
         function onFileSystemSuccess(fileSystem) {
-            console.log("fileSystem: " + fileSystem);
-            fileSystem.root.getDirectory("Music", {create: false, exclusive: false}, getDirSuccess, fail);
+            console.log("fileSystem: " + fileSystem.name);
+            //fileSystem.root.getDirectory("Music", {create: false, exclusive: false}, getDirSuccess, fail);
         }
          
         function getDirSuccess(dirEntry) {
@@ -103,6 +103,7 @@
 
 
         function fail(error) {
+            console.log(error);
             console.log("Failed to list directory contents: " + error.code);
         }
  
