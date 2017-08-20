@@ -75,7 +75,11 @@
         document.addEventListener('deviceready', function () {
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
             console.log("systemUrl: ");
+            console.log("applicationDirectory/www: ");
             var systemUrl = cordova.file.applicationDirectory + "www/";
+            console.log(systemUrl);
+            console.log("dataDirectory: ");
+            var systemUrl = cordova.file.dataDirectory;
             console.log(systemUrl);
             console.log("systemUrl end");
             window.resolveLocalFileSystemURL(systemUrl,getDirSuccess, 
