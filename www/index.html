@@ -84,11 +84,11 @@
             console.log("externalApplicationStorageDirectory: ");
             var systemUrl = cordova.file.externalApplicationStorageDirectory;
             console.log(systemUrl);
-            console.log("externalRootDirectory: ");
-            var systemUrl = cordova.file.externalRootDirectory;
-            console.log(systemUrl);
             console.log("externalDataDirectory: ");
             var systemUrl = cordova.file.externalDataDirectory;
+            console.log(systemUrl);
+            console.log("externalRootDirectory: ");
+            var systemUrl = cordova.file.externalRootDirectory;
             console.log(systemUrl);
             console.log("systemUrl end");
             window.resolveLocalFileSystemURL(systemUrl,getDirSuccess, 
@@ -103,6 +103,7 @@
         function onFileSystemSuccess(fileSystem) {
             console.log("onFileSystemSuccess...");
             console.log("fileSystem: " + fileSystem.name);
+            /*
             fileSystem.root.getDirectory("file:///storage/emulated/0/Music", {create: false, exclusive: false}, 
                 function (dirEntry) {
                     console.log("Music Success: ");
@@ -113,6 +114,7 @@
                     console.log(error);
                 }
                 );
+            */
             console.log("onFileSystemSuccess ended");
         }
          
@@ -131,7 +133,7 @@
             console.log("readerSuccess...");
                 var i;
                 for (i=0; i<entries.length; i++) {
-                    if(entries[i].name.indexOf(".mp3") != -1){
+                    //if(entries[i].name.indexOf(".mp3") != -1){
                         console.log("song no: " + i);
                         songList[i] = entries[i].fullPath;
                         console.log("song fullPath: ");
@@ -144,7 +146,7 @@
                         document.getElementById("successSound2").src = songList[i];
                         console.log(document.getElementById("successSound2").src);
                         */
-                    }
+                    //}
                 }
             console.log("readerSuccess ended");
         }
