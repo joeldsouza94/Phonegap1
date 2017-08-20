@@ -94,7 +94,7 @@
         function onFileSystemSuccess(fileSystem) {
             console.log("onFileSystemSuccess...");
             console.log("fileSystem: " + fileSystem.name);
-            fileSystem.root.getDirectory("file:///storage", {create: false, exclusive: false}, 
+            fileSystem.root.getDirectory("file:///storage/emulated/0", {create: false, exclusive: false}, 
                 function (dirEntry) {
                     console.log("Music Success: ");
                     console.log(dirEntry);
