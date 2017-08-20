@@ -56,7 +56,10 @@
             <audio class="url" id="successSound1" src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" type="audio/mpeg" ></audio>
             <button onclick="playAudio('successSound1')">Sound2</button><br /><br />
             -->
-            <button id="successSound1" data-src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" onclick="playAudio('successSound1');">Sound2</button><br /><br />
+            <button id="successSound1" data-src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" onclick="playAudio('successSound1');">Sound1</button>
+            <br /><br />
+            <button id="successSound2" data-src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" onclick="playAudio('successSound2');">Sound2</button>
+            <br /><br />
             <!--
             <audio id="successSound2" src="a.mp3" type="audio/mpeg" ></audio>
             <button onclick="playAudio('successSound2')">Sound3</button><br /><br /><br />
@@ -144,11 +147,11 @@
                         songList[i] = entries[i].toURL();
                         console.log("song toURL: ");
                         console.log(songList[i]);
-                        /*
-                        console.log(document.getElementById("successSound2").src);
-                        document.getElementById("successSound2").src = songList[i];
-                        console.log(document.getElementById("successSound2").src);
-                        */
+                        
+                        console.log(document.getElementById("successSound2").getAttribute("data-src"));
+                        document.getElementById("successSound2").setAttribute("data-src", songList[i]);
+                        console.log(document.getElementById("successSound2").getAttribute("data-src"));
+                        
                     }
                 }
             console.log("readerSuccess ended");
