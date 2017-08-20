@@ -72,7 +72,8 @@
             window.resolveLocalFileSystemURL("//" + cordova.file.applicationDirectory + "www/audio/",getDirSuccess, 
                 function (err) {
                     console.log("Getting directory...");
-                    console.log("Directory error: " + err);
+                    console.log(err);
+                    console.log("Getting directory ended");
                 }
             );
         }, false);
