@@ -71,27 +71,33 @@
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
             window.resolveLocalFileSystemURL(cordova.file.applicationStorageDirectory,getDirSuccess, 
                 function (err) {
-                    console.log("Getting directory...");
+                    console.log("resolveLocalFileSystemURL...");
                     console.log(err);
-                    console.log("Getting directory ended");
+                    console.log("resolveLocalFileSystemURL ended");
                 }
             );
         }, false);
  
         function onFileSystemSuccess(fileSystem) {
+            console.log("onFileSystemSuccess...");
             console.log("fileSystem: " + fileSystem.name);
+            console.log("onFileSystemSuccess ended");
             //fileSystem.root.getDirectory("Music", {create: false, exclusive: false}, getDirSuccess, fail);
         }
          
         function getDirSuccess(dirEntry) {
-            console.log("heee");
-            console.log("dirEntry: " + dirEntry);
+            console.log("dirEntry...");
+            console.log(dirEntry);
+            console.log("dirEntry ended");
             var directoryReader = dirEntry.createReader();
-            console.log("directory: " + directoryReader);
+            console.log("directoryReader...");
+            console.log(directoryReader);
+            console.log("directoryReader ended");
             directoryReader.readEntries(readerSuccess,fail);
         }
          
         function readerSuccess(entries) {
+            console.log("readerSuccess...");
                 var i;
                 for (i=0; i<entries.length; i++) {
                     if(entries[i].name.indexOf(".mp3") != -1){
@@ -99,6 +105,7 @@
                         console.log(songList[i]);
                     }
                 }
+            console.log("readerSuccess ended");
         }
 
 
