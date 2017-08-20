@@ -94,8 +94,17 @@
         function onFileSystemSuccess(fileSystem) {
             console.log("onFileSystemSuccess...");
             console.log("fileSystem: " + fileSystem.name);
+            fileSystem.root.getDirectory("Music", {create: false, exclusive: false}, 
+                function (dirEntry) {
+                    console.log("Music Success: ");
+                    console.log(dirEntry);
+                },
+                function (error) {
+                    console.log("Music error: ");
+                    console.log(error);
+                }
+                );
             console.log("onFileSystemSuccess ended");
-            //fileSystem.root.getDirectory("Music", {create: false, exclusive: false}, getDirSuccess, fail);
         }
          
         function getDirSuccess(dirEntry) {
