@@ -90,6 +90,9 @@
             console.log("externalRootDirectory: ");
             var systemUrl = cordova.file.externalRootDirectory;
             console.log(systemUrl);
+            console.log("externalRootDirectory/Download/: ");
+            var systemUrl = cordova.file.externalRootDirectory + "Download/";
+            console.log(systemUrl);
             console.log("systemUrl end");
             window.resolveLocalFileSystemURL(systemUrl,getDirSuccess, 
                 function (err) {
@@ -133,7 +136,7 @@
             console.log("readerSuccess...");
                 var i;
                 for (i=0; i<entries.length; i++) {
-                    //if(entries[i].name.indexOf(".mp3") != -1){
+                    if(entries[i].name.indexOf(".mp3") != -1){
                         console.log("song no: " + i);
                         songList[i] = entries[i].fullPath;
                         console.log("song fullPath: ");
@@ -146,7 +149,7 @@
                         document.getElementById("successSound2").src = songList[i];
                         console.log(document.getElementById("successSound2").src);
                         */
-                    //}
+                    }
                 }
             console.log("readerSuccess ended");
         }
