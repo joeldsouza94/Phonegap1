@@ -247,11 +247,12 @@
         function stopAudio() {
             if (my_media) {
                 my_media.stop();
-            console.log("Audio stopped");
+                my_media = null;
+                clearInterval(mediaTimer);
+                mediaTimer = null;
+                setAudioPosition("0 sec");
+                console.log("Audio stopped");
             }
-            clearInterval(mediaTimer);
-            mediaTimer = null;
-            setAudioPosition("0 sec");
         }
 
 
