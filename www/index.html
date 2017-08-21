@@ -61,8 +61,8 @@
             <h3 id="song">Blank</h3>
             <button id="successSound2" data-src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" onclick="playAudio('successSound2');">Sound2</button>
             <br /><br />
-            <ul id="songList">
-                <li><h5>Phone Song List: </h5></li>
+            <ul id="songList" style="list-style-type:none">
+                <li><h3>Phone song list: </h3></li>
             </ul>
             <!--
             <audio id="successSound2" src="a.mp3" type="audio/mpeg" ></audio>
@@ -80,6 +80,8 @@
 
         var songList = new Array();
         document.addEventListener('deviceready', function () {
+            var j = 1;
+            var songId;
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
             console.log("systemUrl: ");
             console.log("applicationDirectory/www: ");
@@ -154,6 +156,7 @@
                         console.log(songList[i]);
                         
                         createSongList(entries[i]);
+                        document.getElementById(songId).addEventListener("click", playAudio(songId));
                         //document.getElementById("song").innerHTML = 
                         /*
                         console.log(document.getElementById("successSound2").getAttribute("data-src"));
@@ -169,8 +172,14 @@
             var li = document.createElement("li");
             var button = document.createElement("button");
             button.innerHTML = songEntry.name;
-            var br = document.createElement("hr");
-            button.appendChild(br);
+            songId = "song" + j;
+            console.log("songId: " + songId);
+            button.setAttribute("id", songId);
+            console.log("button songId: " + button.getAttribute('id'));
+            j++;
+            button.setAttribute("data-src", songEntry.toURL());
+            var hr = document.createElement("hr");
+            button.appendChild(hr);
             li.appendChild(button);
             document.getElementById("songList").appendChild(li);
         }
