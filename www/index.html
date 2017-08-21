@@ -156,7 +156,7 @@
                         console.log(songList[i]);
                         
                         createSongList(entries[i]);
-                        document.getElementById(songId).addEventListener("click", playAudio(songId));
+                        //document.getElementById(songId).addEventListener("click", playAudio(songId));
                         //document.getElementById("song").innerHTML = 
                         /*
                         console.log(document.getElementById("successSound2").getAttribute("data-src"));
@@ -175,9 +175,11 @@
             songId = "song" + j;
             console.log("songId: " + songId);
             button.setAttribute("id", songId);
-            console.log("button songId: " + button.getAttribute('id'));
+            console.log("button Id: " + button.getAttribute('id'));
             j++;
-            button.setAttribute("data-src", songEntry.toURL());
+            button.setAttribute("onclick", "playAudio(" + songId + ")");
+            console.log("button onclick Id: " + button.getAttribute('onclick'));
+            //button.setAttribute("data-src", songEntry.toURL());
             var hr = document.createElement("hr");
             button.appendChild(hr);
             li.appendChild(button);
