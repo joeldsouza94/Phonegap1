@@ -172,8 +172,7 @@
         
         function playAudio(id) {
             if (id != prevId) {
-                my_media = null;
-                mediaTimer = null;
+                stopAudio();
             }
             prevId = id;
             var running;
