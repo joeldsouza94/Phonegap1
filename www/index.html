@@ -58,6 +58,7 @@
             -->
             <button id="successSound1" data-src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" onclick="playAudio('successSound1');">Sound1</button>
             <br /><br />
+            <h3 id="song">Blank</h3>
             <button id="successSound2" data-src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" onclick="playAudio('successSound2');">Sound2</button>
             <br /><br />
             <!--
@@ -148,6 +149,7 @@
                         console.log("song toURL: ");
                         console.log(songList[i]);
                         
+                        document.getElementById("song").innerHTML = 
                         console.log(document.getElementById("successSound2").getAttribute("data-src"));
                         document.getElementById("successSound2").setAttribute("data-src", songList[i]);
                         console.log(document.getElementById("successSound2").getAttribute("data-src"));
