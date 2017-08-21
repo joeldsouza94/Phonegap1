@@ -141,7 +141,8 @@
                 var i;
                 for (i=0; i<entries.length; i++) {
                     if(entries[i].name.indexOf(".mp3") != -1){
-                        console.log("song no: " + i);
+                        console.log("song no: " + i);                        
+                        document.getElementById("song").innerHTML = entries[i];
                         songList[i] = entries[i].fullPath;
                         console.log("song fullPath: ");
                         console.log(songList[i]);
@@ -149,7 +150,7 @@
                         console.log("song toURL: ");
                         console.log(songList[i]);
                         
-                        document.getElementById("song").innerHTML = 
+                        //document.getElementById("song").innerHTML = 
                         console.log(document.getElementById("successSound2").getAttribute("data-src"));
                         document.getElementById("successSound2").setAttribute("data-src", songList[i]);
                         console.log(document.getElementById("successSound2").getAttribute("data-src"));
