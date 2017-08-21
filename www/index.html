@@ -168,8 +168,14 @@
  
             var my_media = null;
             var mediaTimer = null;
+            var prevId = null;
         
         function playAudio(id) {
+            if (id != prevId) {
+                my_media = null;
+                mediaTimer = null;
+            }
+            prevId = id;
             var running;
             var audioElement = document.getElementById(id);
             var audioClass = audioElement.className;
