@@ -61,6 +61,9 @@
             <h3 id="song">Blank</h3>
             <button id="successSound2" data-src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" onclick="playAudio('successSound2');">Sound2</button>
             <br /><br />
+            <ul id="songList">
+                <li><h5>Phone Song List: </h5></li>
+            </ul>
             <!--
             <audio id="successSound2" src="a.mp3" type="audio/mpeg" ></audio>
             <button onclick="playAudio('successSound2')">Sound3</button><br /><br /><br />
@@ -142,7 +145,7 @@
                 for (i=0; i<entries.length; i++) {
                     if(entries[i].name.indexOf(".mp3") != -1){
                         console.log("song no: " + i);                        
-                        document.getElementById("successSound2").innerHTML = entries[i].name;
+                        //document.getElementById("successSound2").innerHTML = entries[i].name;
                         songList[i] = entries[i].fullPath;
                         console.log("song fullPath: ");
                         console.log(songList[i]);
@@ -150,14 +153,26 @@
                         console.log("song toURL: ");
                         console.log(songList[i]);
                         
+                        createSongList(entries[i]);
                         //document.getElementById("song").innerHTML = 
+                        /*
                         console.log(document.getElementById("successSound2").getAttribute("data-src"));
                         document.getElementById("successSound2").setAttribute("data-src", songList[i]);
                         console.log(document.getElementById("successSound2").getAttribute("data-src"));
-                        
+                        */
                     }
                 }
             console.log("readerSuccess ended");
+        }
+
+        function createSongList(songEntry) {
+            var li = document.createElement("li");
+            var button = document.createElement("button");
+            button.innerHTML = songEntry.name;
+            var br = document.createElement("hr");
+            button.appendChild(br);
+            li.appendChild(button);
+            document.getElementById("songList").appendChild(li);
         }
 
 
