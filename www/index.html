@@ -169,6 +169,7 @@
         }
 
         function createSongList(songEntry) {
+            console.log("createSongList: ");
             var li = document.createElement("li");
             var button = document.createElement("button");
             button.innerHTML = songEntry.name;
@@ -177,13 +178,14 @@
             button.setAttribute("id", songId);
             console.log("button Id: " + button.getAttribute('id'));
             j++;
-            button.setAttribute("onclick", "playAudio(" + songId + ")");
+            button.setAttribute("onclick", "playAudio('" + songId + "')");
             console.log("button onclick Id: " + button.getAttribute('onclick'));
-            //button.setAttribute("data-src", songEntry.toURL());
+            button.setAttribute("data-src", songEntry.toURL());
             var hr = document.createElement("hr");
             button.appendChild(hr);
             li.appendChild(button);
             document.getElementById("songList").appendChild(li);
+            console.log("createSongList ends");
         }
 
 
