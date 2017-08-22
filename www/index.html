@@ -44,34 +44,22 @@
 
 <body>
     <div class="app">
-        <h1>PhoneGap</h1>
-        <div id="deviceready" class="blink">
-            <p class="event listening">Connecting to Device</p>
-            <p class="event received">Device is Ready</p>
+        <div id="deviceready">
+            <div class="event listening">Loading...</div>
+            <div class="event received">
+                <button onclick="pauseAudio();">Pause</button><br /><br />
+                <button onclick="stopAudio();">Stop</button><br />
+                <p id="audio_position">0 sec</p><br />
+                <h1>Online song list: </h1>
+                <button id="onlineSound1" data-src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" onclick="playAudio('onlineSound1');">Sound1</button>
+                <br /><br />
+                <ul id="songList" style="list-style-type:none">
+                    <li><h1>Phone song list: </h1></li>
+                </ul>
+                <br /><br /><br /><br /><br />
+            
+            </div>
         </div>
-        <h1>Work</h1>
-            <!--
-            <audio id="successSound" src="c.mp3" type="audio/mpeg" ></audio>
-            <button onclick="playAudio('successSound')">Sound1</button><br /><br />
-            <audio class="url" id="successSound1" src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" type="audio/mpeg" ></audio>
-            <button onclick="playAudio('successSound1')">Sound2</button><br /><br />
-            -->
-            <button id="successSound1" data-src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" onclick="playAudio('successSound1');">Sound1</button>
-            <br /><br />
-            <h3 id="song">Blank</h3>
-            <button id="successSound2" data-src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" onclick="playAudio('successSound2');">Sound2</button>
-            <br /><br />
-            <ul id="songList" style="list-style-type:none">
-                <li><h3>Phone song list: </h3></li>
-            </ul>
-            <!--
-            <audio id="successSound2" src="a.mp3" type="audio/mpeg" ></audio>
-            <button onclick="playAudio('successSound2')">Sound3</button><br /><br /><br />
-            -->
-            <button onclick="pauseAudio();">Pause</button><br /><br />
-            <button onclick="stopAudio();">Stop</button><br /><br />
-            <p id="audio_position">0 sec</p><br /><br /><br />
-        
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
