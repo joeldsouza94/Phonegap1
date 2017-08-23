@@ -39,8 +39,7 @@
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
 
          
-    <script type="text/javascript" src="cordova.js"></script>    
-    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>   
     <title>Hello World</title>
 </head>
 
@@ -49,7 +48,7 @@
         
             <br /><br /><br /><br /><br /> 
     
-            <div id="deviceready">
+            <div id="deviceready1">
                 <div class="event listening">hey...</div>
                 <div class="event received">
                 <br /><br /><br /><br /><br />
@@ -68,12 +67,12 @@
         
     
     <script type="text/javascript">
-        app.initialize();
+        //app.initialize();
 
         var songList = new Array();
             var j = 1;
             var songId;
-        //document.addEventListener('deviceready', function () {
+        document.addEventListener('deviceready', function () {
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
             console.log("systemUrl: ");
             console.log("applicationDirectory/www: ");
@@ -102,7 +101,7 @@
                     console.log("resolveLocalFileSystemURL ended");
                 }
             );
-        //}, false);
+        }, false);
  
         function onFileSystemSuccess(fileSystem) {
             console.log("onFileSystemSuccess...");
