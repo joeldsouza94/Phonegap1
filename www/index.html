@@ -52,8 +52,8 @@
 <body>
     
         
-            <br /><br /><br /><br /><br /> 
-                <br /><br /><br /><br /><br />
+            
+                <br /><br />
                 <button onclick="pauseAudio();">Pause</button><br /><br />
                 <button onclick="stopAudio();">Stop</button><br />
                 <p id="audio_position" style="text-align: center;">0 sec</p><br />
@@ -137,6 +137,7 @@
         function readerSuccess(entries) {
             console.log("readerSuccess...");
                 var i;
+                entries.sort();
                 for (i=0; i<entries.length; i++) {
                     if(entries[i].name.indexOf(".mp3") != -1){
                         console.log("song no: " + i);                        
