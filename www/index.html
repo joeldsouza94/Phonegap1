@@ -137,7 +137,6 @@
         function readerSuccess(entries) {
             console.log("readerSuccess...");
                 var i;
-                entries.sort();
                 for (i=0; i<entries.length; i++) {
                     if(entries[i].name.indexOf(".mp3") != -1){
                         console.log("song no: " + i);                        
@@ -159,6 +158,12 @@
                         */
                     }
                 }
+                var mylist = $('#songList');
+                var listitems = mylist.children('li').get();
+                listitems.sort(function(a, b) {
+                   return $(a).text().toUpperCase().localeCompare($(b).text().toUpperCase());
+                })
+                $.each(listitems, function(idx, itm) { mylist.append(itm); });
             console.log("readerSuccess ended");
         }
 
