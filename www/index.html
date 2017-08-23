@@ -73,7 +73,7 @@
         var songList = new Array();
             var j = 1;
             var songId;
-        document.addEventListener('deviceready', function () {
+        //document.addEventListener('deviceready', function () {
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
             console.log("systemUrl: ");
             console.log("applicationDirectory/www: ");
@@ -102,7 +102,7 @@
                     console.log("resolveLocalFileSystemURL ended");
                 }
             );
-        }, false);
+        //}, false);
  
         function onFileSystemSuccess(fileSystem) {
             console.log("onFileSystemSuccess...");
