@@ -27,7 +27,7 @@
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
     <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' http://* 'unsafe-inline'; media-src *; img-src 'self' http://* data:" />
     <!-- Good default declaration:
     * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
     * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
@@ -38,6 +38,12 @@
     -->
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
 
+  <!-- Include jQuery Mobile stylesheets -->
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  <!-- Include the jQuery library -->
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <!-- Include the jQuery Mobile library -->
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
          
     <script type="text/javascript" src="cordova.js"></script>   
     <title>Hello World</title>
@@ -47,31 +53,27 @@
     
         
             <br /><br /><br /><br /><br /> 
-    
-            <div id="deviceready1">
-                <div class="event listening">hey...</div>
-                <div class="event received">
                 <br /><br /><br /><br /><br />
                 <button onclick="pauseAudio();">Pause</button><br /><br />
                 <button onclick="stopAudio();">Stop</button><br />
-                <p id="audio_position">0 sec</p><br />
+                <p id="audio_position" style="text-align: center;">0 sec</p><br />
                 <h1>Online song list: </h1>
-                <button id="onlineSound1" data-src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" onclick="playAudio('onlineSound1');">Sound1</button>
+                <button id="onlineSound1" data-src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" onclick="playAudio('onlineSound1');">Rock guitar</button>
                 <br /><br />
                 <h1>Phone song list: </h1>
-                <ul id="songList" style="list-style-type:none">
+                <form class="ui-filterable">
+                    <input id="myFilter" data-type="search" placeholder="Search..">
+                </form>
+                <ul id="songList" data-role="listview" data-filter="true" data-input="#myFilter" data-autodividers="true" data-inset="true">
                 </ul>
                 <br /><br /><br /><br /><br />
-            </div>
-            </div>
         
     
     <script type="text/javascript">
-        //app.initialize();
 
         var songList = new Array();
-            var j = 1;
-            var songId;
+        var j = 1;
+        var songId;
         document.addEventListener('deviceready', function () {
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
             console.log("systemUrl: ");
