@@ -48,7 +48,7 @@
   
     <script>
         $(document).ready(function(){            
-            $("#body").css("background-color", "#4B946A");    
+            $(".ui-content").css("background-color", "#4B946A");    
         });
     </script>
     <script type="text/javascript" src="cordova.js"></script>   
@@ -56,24 +56,29 @@
 </head>
 
 <body>
-    
-        
-            
-    <div id="body">
+             
+    <div data-role="page" id="pageone">
+
+        <div data-role="header">
+            <h1>Music</h1>
+        </div>
+
+        <div data-role="main" class="ui-content">
                 <br /><br />
-                <button onclick="pauseAudio();">Pause</button><br /><br />
-                <button onclick="stopAudio();">Stop</button><br />
-                <p id="audio_position" style="text-align: center;">0 sec</p><br />
+                <button class="ui-btn" onclick="pauseAudio();">Pause</button><br /><br />
+                <button class="ui-btn" onclick="stopAudio();">Stop</button><br />
+                <h3 id="audio_position" style="text-align: center;">0 sec</h3><br />
                 <h1>Online song list: </h1>
-                <button id="onlineSound1" data-src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" onclick="playAudio('onlineSound1');">Rock guitar</button>
+                <button class="ui-btn" id="onlineSound1" data-src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" onclick="playAudio('onlineSound1');">Rock guitar</button>
                 <br /><br />
                 <h1>Phone song list: </h1>
                 <form class="ui-filterable">
                     <input id="myFilter" data-type="search" placeholder="Search..">
                 </form>
-                <ul id="songList" data-role="listview" data-filter="true" data-input="#myFilter" data-autodividers="true" data-inset="true">
+                <ul id="songList" data-role="listview" data-filter="true" data-input="#myFilter" data-inset="true">
                 </ul>
                 <br /><br /><br /><br /><br />
+        </div>
         
     </div>
     
@@ -184,6 +189,7 @@
             console.log("songId: " + songId);
             button.setAttribute("id", songId);
             console.log("button Id: " + button.getAttribute('id'));
+            button.setAttribute("class", "ui-btn");
             j++;
             button.setAttribute("onclick", "playAudio('" + songId + "')");
             console.log("button onclick Id: " + button.getAttribute('onclick'));
@@ -192,6 +198,7 @@
             button.appendChild(hr);
             li.appendChild(button);
             document.getElementById("songList").appendChild(li);
+            document.getElementById("songList").appendChild(hr);
             console.log("createSongList ends");
         }
 
