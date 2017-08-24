@@ -195,10 +195,9 @@
             console.log("button onclick Id: " + button.getAttribute('onclick'));
             button.setAttribute("data-src", songEntry.toURL());
             var hr = document.createElement("hr");
-            button.appendChild(hr);
             li.appendChild(button);
+            li.appendChild(hr);
             document.getElementById("songList").appendChild(li);
-            document.getElementById("songList").appendChild(hr);
             console.log("createSongList ends");
         }
 
