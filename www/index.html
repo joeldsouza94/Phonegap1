@@ -27,7 +27,7 @@
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
     <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' http://* 'unsafe-inline'; media-src *; img-src 'self' http://* data:" />
     <!-- Good default declaration:
     * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
     * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
@@ -37,40 +37,115 @@
     * Create your own at http://cspisawesome.com
     -->
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
-
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
+  
+  <!-- Include jQuery Mobile stylesheets -->
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    
+  <!-- Include the jQuery library -->
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <!-- Include the jQuery Mobile library -->
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  
+    <script>
+        $(document).ready(function(){            
+            $(".ui-content").css("background-color", "#4B946A");    
+        });
+    </script>
+    <script type="text/javascript" src="cordova.js"></script>  
     <title>Hello World</title>
 </head>
 
 <body>
-    <div class="app">
-        <h1>PhoneGap</h1>
-        <div id="deviceready" class="blink">
-            <p class="event listening">Connecting to Device</p>
-            <p class="event received">Device is Ready</p>
+             
+    <div data-role="page" id="pageone">
+
+        <div data-role="header">
+            <h1>Music</h1>
         </div>
-        <h1>Work</h1>
-            <audio id="successSound" src="c.mp3" type="audio/mpeg" ></audio>
-            <button onclick="playAudio('successSound')">Sound1</button><br /><br />
-            <audio class="url" id="successSound1" src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" type="audio/mpeg" ></audio>
-            <button onclick="playAudio('successSound1')">Sound2</button><br /><br />
-            <audio id="successSound2" src="a.mp3" type="audio/mpeg" ></audio>
-            <button onclick="playAudio('successSound2')">Sound3</button><br /><br /><br />
-            <button onclick="pauseAudio();">Pause</button><br /><br />
-            <button onclick="stopAudio();">Stop</button><br /><br />
-            <p id="audio_position">0 sec</p><br /><br /><br />
+
+        <div data-role="main" class="ui-content">
+                <br /><br />
+                <button class="ui-btn" onclick="pauseAudio();">Pause</button><br /><br />
+                <button class="ui-btn" onclick="stopAudio();">Stop</button><br />
+                <h3 id="audio_position" style="text-align: center;">0 sec</h3><br />
+                <h1>Online song list: </h1>
+                <button class="ui-btn" id="onlineSound1" data-src="http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3" onclick="playAudio('onlineSound1');">Rock guitar</button>
+                <br /><br />
+                <h1>Phone song list: </h1>
+                <form class="ui-filterable">
+                    <input id="myFilter" data-type="search" placeholder="Search..">
+                </form>
+                <ul id="songList" data-role="listview" data-filter="true" data-input="#myFilter" data-inset="true">
+                </ul>
+                <br /><br /><br /><br /><br />
+        </div>
         
     </div>
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
+    
     <script type="text/javascript">
-        app.initialize();
+
+        var my_media = null;
+        var mediaTimer = null;
+        var prevId = null;
 
         var songList = new Array();
-        document.addEventListener('deviceready', function () {
-            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+        var j = 1;
+        var songId;
+
+        //document.addEventListener("deviceready", onDeviceReadyMusicControls, false);
+        function onDeviceReadyMusicControls() {
+            console.log("Device is ready...");
+            console.log("MusicControls: ");
+            console.log(MusicControls);
+            MusicControls.create({
+                track       : 'Time is Running Out',        // optional, default : ''
+                artist      : 'Muse',                       // optional, default : ''
+                //cover       : 'albums/absolution.jpg',      // optional, default : nothing
+                // cover can be a local path (use fullpath 'file:///storage/emulated/...', or only 'my_image.jpg' if my_image.jpg is in the www folder of your app)
+                //           or a remote url ('http://...', 'https://...', 'ftp://...')
+                //isPlaying   : true,                         // optional, default : true
+                dismissable : true,                         // optional, default : false
+
+                // hide previous/next/close buttons:
+                hasPrev   : false,      // show previous button, optional, default: true
+                hasNext   : false,      // show next button, optional, default: true
+                hasClose  : true,       // show close button, optional, default: false
+
+                // iOS only, optional
+                album       : 'Absolution',     // optional, default: ''
+                duration : 60, // optional, default: 0
+                elapsed : 10, // optional, default: 0
+
+                // Android only, optional
+                // text displayed in the status bar when the notification (and the ticker) are updated
+                ticker    : 'Now playing "Time is Running Out"'
+            }, onSuccess, onError);
+        }
+
+        document.addEventListener("deviceready", onDeviceReadyFile, false);
+        function onDeviceReadyFile() {
+            console.log("MusicControls: ");
+            console.log(MusicControls);
+            console.log("File: ");
+            console.log(cordova.file);
             console.log("systemUrl: ");
+            console.log("applicationDirectory/www: ");
             var systemUrl = cordova.file.applicationDirectory + "www/";
+            console.log(systemUrl);
+            console.log("dataDirectory: ");
+            var systemUrl = cordova.file.dataDirectory;
+            console.log(systemUrl);
+            console.log("externalApplicationStorageDirectory: ");
+            var systemUrl = cordova.file.externalApplicationStorageDirectory;
+            console.log(systemUrl);
+            console.log("externalDataDirectory: ");
+            var systemUrl = cordova.file.externalDataDirectory;
+            console.log(systemUrl);
+            console.log("externalRootDirectory: ");
+            var systemUrl = cordova.file.externalRootDirectory;
+            console.log(systemUrl);
+            console.log("externalRootDirectory/Download/: ");
+            var systemUrl = cordova.file.externalRootDirectory + "Download/";
             console.log(systemUrl);
             console.log("systemUrl end");
             window.resolveLocalFileSystemURL(systemUrl,getDirSuccess, 
@@ -80,142 +155,162 @@
                     console.log("resolveLocalFileSystemURL ended");
                 }
             );
-        }, false);
- 
-        function onFileSystemSuccess(fileSystem) {
-            console.log("onFileSystemSuccess...");
-            console.log("fileSystem: " + fileSystem.name);
-            console.log("onFileSystemSuccess ended");
-            //fileSystem.root.getDirectory("Music", {create: false, exclusive: false}, getDirSuccess, fail);
         }
          
-        function getDirSuccess(dirEntry) {
-            console.log("dirEntry...");
-            console.log(dirEntry);
-            console.log("dirEntry ended");
-            var directoryReader = dirEntry.createReader();
-            console.log("directoryReader...");
-            console.log(directoryReader);
-            console.log("directoryReader ended");
-            directoryReader.readEntries(readerSuccess,fail);
-        }
-         
-        function readerSuccess(entries) {
-            console.log("readerSuccess...");
-                var i;
-                for (i=0; i<entries.length; i++) {
-                    if(entries[i].name.indexOf(".mp3") != -1){
-                        songList[i] = entries[i].fullPath;
-                        console.log(songList[i]);
-                    }
-                }
-            console.log("readerSuccess ended");
-        }
-
-
-        function fail(error) {
-            console.log(error);
-            console.log("Failed to list directory contents: " + error.code);
-        }
- 
-            var my_media = null;
-            var mediaTimer = null;
-        
-        function playAudio(id) {
-            var running;
-            var audioElement = document.getElementById(id);
-            var audioClass = audioElement.className;
-            console.log("Audio class: " +audioClass);
-                        var url = audioElement.getAttribute('src');
-            console.log("Audio URL: " +url);
-            if (audioClass != "url") {
-                if (device.platform == 'Android') {
-                        url = '/android_asset/www/' + url;
-                    console.log("Android Audio URL: " +url);
-                    }
+            function getDirSuccess(dirEntry) {
+                console.log("dirEntry...");
+                console.log(dirEntry);
+                console.log("dirEntry ended");
+                var directoryReader = dirEntry.createReader();
+                console.log("directoryReader...");
+                console.log(directoryReader);
+                console.log("directoryReader ended");
+                directoryReader.readEntries(readerSuccess,fail);
             }
- 
-        // Play the audio file at url
-            if (my_media == null) {
-                // Create Media object from src
-                my_media = new Media(url,
-                // success callback
-                    function() {
-                        console.log("playAudio():Audio Success");
-                    },
-                // error callback
-                    function(err) {
-                        console.log("playAudio():Audio Error: "+err);
-                    },
-                // status callback
-                    function(status) {
-                        console.log("playAudio():Audio Status: "+status);
-                        if(status === 2) {
-                            console.log("playAudio():Audio Running: "+status);
-                            running = true;
-                            console.log(running);
+         
+            function readerSuccess(entries) {
+                console.log("readerSuccess...");
+                    var i;
+                    for (i=0; i<entries.length; i++) {
+                        if(entries[i].name.indexOf(".mp3") != -1){
+                            console.log("song no: " + i);                        
+                            songList[i] = entries[i].fullPath;
+                            console.log("song fullPath: ");
+                            console.log(songList[i]);
+                            songList[i] = entries[i].toURL();
+                            console.log("song toURL: ");
+                            console.log(songList[i]);                      
+                            createSongList(entries[i]);
                         }
                     }
-                );
-            } // else play current audio
+                    var mylist = $('#songList');
+                    var listitems = mylist.children('li').get();
+                    listitems.sort(function(a, b) {
+                       return $(a).text().toUpperCase().localeCompare($(b).text().toUpperCase());
+                    })
+                    $.each(listitems, function(idx, itm) { mylist.append(itm); });
+                console.log("readerSuccess ended");
+            }
+
+            function createSongList(songEntry) {
+                console.log("createSongList: ");
+                var li = document.createElement("li");
+                var button = document.createElement("button");
+                button.innerHTML = songEntry.name;
+                songId = "song" + j;
+                console.log("songId: " + songId);
+                button.setAttribute("id", songId);
+                console.log("button Id: " + button.getAttribute('id'));
+                button.setAttribute("class", "ui-btn");
+                j++;
+                button.setAttribute("onclick", "playAudio('" + songId + "')");
+                console.log("button onclick Id: " + button.getAttribute('onclick'));
+                button.setAttribute("data-src", songEntry.toURL());
+                var hr = document.createElement("hr");
+                li.appendChild(button);
+                li.appendChild(hr);
+                document.getElementById("songList").appendChild(li);
+                console.log("createSongList ends");
+            }
 
 
-            
-        // Play audio
-            my_media.play();
-            console.log("Audio playing");
-
-
-            // Update my_media position every second
-            if (mediaTimer == null) {
-                mediaTimer = setInterval(function() {
-                    // get my_media position
-                    my_media.getCurrentPosition(
+            function fail(error) {
+                console.log(error);
+                console.log("Failed to list directory contents: " + error.code);
+            }
+        
+            function playAudio(id) {
+                if (id != prevId) {
+                    stopAudio();
+                }
+                prevId = id;
+                var running;
+                var audioElement = document.getElementById(id);
+                var audioClass = audioElement.className;
+                console.log("Audio class: " +audioClass);
+                var url = audioElement.getAttribute('data-src');
+                console.log("Audio URL: " +url);
+     
+                // Play the audio file at url
+                if (my_media == null) {
+                    // Create Media object from src
+                    my_media = new Media(url,
                         // success callback
-                        function(position) {
-                            if (position > -1) {
-                                setAudioPosition((Math.round(position)) + " sec");
-                            }
+                        function() {
+                            console.log("playAudio():Audio Success");
                         },
                         // error callback
-                        function(e) {
-                            console.log("Error getting pos=" + e);
-                            setAudioPosition("Error: " + e);
+                        function(err) {
+                            console.log("playAudio():Audio Error: "+err);
+                        },
+                        // status callback
+                        function(status) {
+                            console.log("playAudio():Audio Status: "+status);
                         }
                     );
-                }, 1000);
+                } // else play current audio
+                // Play audio
+                my_media.play();
+                console.log("Audio playing");
+                // Update my_media position every second
+                if (mediaTimer == null) {
+                    mediaTimer = setInterval(function() {
+                        // get my_media position
+                        my_media.getCurrentPosition(
+                            // success callback
+                            function(position) {
+                                if (position > -1) {
+                                    setAudioPosition((Math.round(position)) + " sec");
+                                }
+                            },
+                            // error callback
+                            function(e) {
+                                console.log("Error getting pos=" + e);
+                                setAudioPosition("Error: " + e);
+                            }
+                        );
+                    }, 1000);
+                }
+                document.addEventListener("deviceready", onDeviceReadyMusicControls, false);
             }
-        }
         
         
-        // Pause audio
-        // 
-        function pauseAudio() {
-            if (my_media) {
-                my_media.pause();
-            console.log("Audio paused");
+            // Pause audio
+            function pauseAudio() {
+                if (my_media) {
+                    my_media.pause();
+                console.log("Audio paused");
+                }
             }
-        }
 
-        // Stop audio
-        // 
-        function stopAudio() {
-            if (my_media) {
-                my_media.stop();
-            console.log("Audio stopped");
+            // Stop audio
+            function stopAudio() {
+                if (my_media) {
+                    my_media.stop();
+                    my_media = null;
+                    clearInterval(mediaTimer);
+                    mediaTimer = null;
+                    setAudioPosition("0 sec");
+                    console.log("Audio stopped");
+                }
             }
-            clearInterval(mediaTimer);
-            mediaTimer = null;
-            setAudioPosition("0 sec");
-        }
+
+            // Set audio position
+            function setAudioPosition(position) {
+                document.getElementById('audio_position').innerHTML = position;
+            }
+
+            
 
 
-        // Set audio position
-        // 
-        function setAudioPosition(position) {
-            document.getElementById('audio_position').innerHTML = position;
-        }
+            function onSuccess(){
+                console.log("MusicControls success");
+            }
 
+            function onError(error){
+                console.log("MusicControls error: ");
+                console.log(error);
+            }
     </script>
 </body>
 
