@@ -92,7 +92,7 @@
         var j = 1;
         var songId;
 
-        document.addEventListener("deviceready", onDeviceReadyMusicControls, false);
+        //document.addEventListener("deviceready", onDeviceReadyMusicControls, false);
         function onDeviceReadyMusicControls() {
             console.log("Device is ready...");
             console.log("MusicControls: ");
@@ -103,7 +103,7 @@
                 //cover       : 'albums/absolution.jpg',      // optional, default : nothing
                 // cover can be a local path (use fullpath 'file:///storage/emulated/...', or only 'my_image.jpg' if my_image.jpg is in the www folder of your app)
                 //           or a remote url ('http://...', 'https://...', 'ftp://...')
-                isPlaying   : true,                         // optional, default : true
+                //isPlaying   : true,                         // optional, default : true
                 dismissable : true,                         // optional, default : false
 
                 // hide previous/next/close buttons:
@@ -257,6 +257,7 @@
                 } // else play current audio
                 // Play audio
                 my_media.play();
+                onDeviceReadyMusicControls();
                 console.log("Audio playing");
                 // Update my_media position every second
                 if (mediaTimer == null) {
