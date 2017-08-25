@@ -115,5 +115,5 @@
     </platform>
     <plugin name="cordova-plugin-media" spec="~2.2.0" />
     <plugin name="cordova-plugin-file" spec="~4.3.3" />
-    <plugin name="cordova-plugin-music-controls" spec="https://github.com/homerours/cordova-music-controls-plugin.git" />
+    <plugin name="cordova-music-controller" spec="https://github.com/phi-jp/cordova-music-controller.git" />
 </widget>
