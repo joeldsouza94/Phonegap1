@@ -126,7 +126,6 @@
         function onDeviceReadyFile() {
             console.log("File: ");
             console.log(cordova.file);
-            //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
             console.log("systemUrl: ");
             console.log("applicationDirectory/www: ");
             var systemUrl = cordova.file.applicationDirectory + "www/";
@@ -155,13 +154,6 @@
                 }
             );
         }
-  
-
-            function onFileSystemSuccess(fileSystem) {
-                console.log("onFileSystemSuccess...");
-                console.log("fileSystem: " + fileSystem.name);
-                console.log("onFileSystemSuccess ended");
-            }
          
             function getDirSuccess(dirEntry) {
                 console.log("dirEntry...");
@@ -257,7 +249,6 @@
                 } // else play current audio
                 // Play audio
                 my_media.play();
-                onDeviceReadyMusicControls();
                 console.log("Audio playing");
                 // Update my_media position every second
                 if (mediaTimer == null) {
@@ -278,6 +269,7 @@
                         );
                     }, 1000);
                 }
+                document.addEventListener("deviceready", onDeviceReadyMusicControls, false);
             }
         
         
