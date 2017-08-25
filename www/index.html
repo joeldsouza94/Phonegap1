@@ -92,11 +92,9 @@
         var j = 1;
         var songId;
 
-        document.addEventListener("deviceready", onDeviceReady, false);
-        function onDeviceReady() {
+        document.addEventListener("deviceready", onDeviceReadyMusicControls, false);
+        function onDeviceReadyMusicControls() {
             console.log("Device is ready...");
-            console.log("console.log works well");
-
             console.log("MusicControls: ");
             console.log(MusicControls);
             MusicControls.create({
@@ -122,8 +120,13 @@
                 // text displayed in the status bar when the notification (and the ticker) are updated
                 ticker    : 'Now playing "Time is Running Out"'
             }, onSuccess, onError);
+        }
 
-            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+        document.addEventListener("deviceready", onDeviceReadyFile, false);
+        function onDeviceReadyFile() {
+            console.log("File: ");
+            console.log(cordova.file);
+            //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
             console.log("systemUrl: ");
             console.log("applicationDirectory/www: ");
             var systemUrl = cordova.file.applicationDirectory + "www/";
@@ -151,8 +154,8 @@
                     console.log("resolveLocalFileSystemURL ended");
                 }
             );
-  
         }
+  
 
             function onFileSystemSuccess(fileSystem) {
                 console.log("onFileSystemSuccess...");
